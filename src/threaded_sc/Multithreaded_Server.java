@@ -1,3 +1,4 @@
+package threaded_sc;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -9,7 +10,7 @@ import java.net.Socket;
 
 public class Multithreaded_Server {
 
-  private static int port=11111, maxConnections=2;
+  private static final int port=11111, maxConnections=2;
   // Listen for incoming connections and handle them
   public static void main(String[] args) {
     int i=0;
@@ -53,19 +54,22 @@ class doComms implements Runnable {
 
        //get thread id
        long threadid = Thread.currentThread().getId();
+       
+       //send connection msg to client 
+       out.println("You are connected.Start communication  thread_id in server: \t"+ threadid);
+                
+               
+       //send starting value
+        out.println("0");
         
-       // Now read from client then write to the client 
-       line=in.readLine();
-          input=input + line;
-          out.println("Your thread_id in server \t"+ threadid);
+        //send ending value
+        out.println("1");
         
+        //send step size
+        out.println("100000");
 
-        
-       //print the message
-        System.out.println("Overall message is:" + input+ "\t From process \t"+ threadid);
-        out.println("Overall message is:" + input+ "\t From process \t"+ threadid);
-        
-
+        float result=Float.parseFloat(in.readLine());
+         System.out.println("The result is " + result + "from thread no : "+threadid);
         server.close();
       } catch (IOException ioe) {
         System.out.println("IOException on socket listen: " + ioe);
