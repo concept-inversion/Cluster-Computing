@@ -3,8 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/mpiuser/NetBeansProjects/Threaded_SC/src/threaded_sc/MultiThreadedSocketServer.java</file>
-            <file>file:/home/mpiuser/NetBeansProjects/Threaded_SC/src/threaded_sc/SocketClient.java</file>
+            <file>file:/home/mpiuser/NetBeansProjects/Threaded_SC/src/threaded_sc/Multithreaded_Server.java</file>
+            <file>file:/home/mpiuser/NetBeansProjects/Threaded_SC/src/threaded_sc/Client.java</file>
         </group>
     </open-files>
 </project-private>
