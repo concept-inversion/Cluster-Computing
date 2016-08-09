@@ -1,26 +1,21 @@
 package threaded_sc;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 import javax.swing.*;
 
 public class Multithreaded_Server {
 
-    private static int port = 11111, maxConnections = 2;
+    private static int port = 11111, maxConnections = 5;
      private static Date date = new Date();
-    List<String> syncal = 
-         Collections.synchronizedList(new ArrayList<String>());
+     public static float[] collect= new float[maxConnections];
+//List<String> syncal = Collections.synchronizedList(new ArrayList<String>());
 // Listen for incoming connections and handle them
 
     public static void main(String[] args) {
@@ -79,16 +74,18 @@ class work implements Runnable {
     private int id,thread;
     //private String line, input;
     private float start,end,step;
-    
-    work(Socket server,int id,int thread,float start,float end,float step) {                      //constructor
+    //private float collect[];
+    work(Socket server,int id,int thread,float start,float end,float step){                      //constructor
         this.server = server;
         this.id=id;
         this.end=end;
         this.start=start;
         this.step=step;
         this.thread=thread;
+        
     }
 
+    @Override
     public void run() {
 
       

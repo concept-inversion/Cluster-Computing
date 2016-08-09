@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import org.apfloat.Apfloat;
+import org.apfloat.ApfloatMath;
 
 public class Client {
 
@@ -36,7 +38,8 @@ public class Client {
 
             //second message from server
             Sock_in = in.readLine();
-            c_in = Float.parseFloat(Sock_in);
+            c_in = Float.parseFloat(Sock_in);              
+                  
             System.out.println(c_in + "\t no of iterations\n");
 
             //third message from server
@@ -44,8 +47,8 @@ public class Client {
             h = Float.parseFloat(Sock_in);
             System.out.println(h + "\t the step size for each iteration\n");
 
-            float sum = calc(start, c_in, h);
-            userinput = Float.toString(sum);
+            Apfloat sum = calc(start, c_in, h);
+            userinput = sum.toString(true);
             out.println(userinput);
             System.out.printf("yei kur vaneko" + userinput);
 
@@ -55,9 +58,40 @@ public class Client {
         }
     }
 
-    //calculating function 
-    static float calc(float start, float c_in, float h) {
-        float temp = 0, end = 0, sum = 0;
+        //calculating function 
+        static Apfloat calc(float start, float itr_in, float steps) {
+            
+            Apfloat x_start = new Apfloat(start, 26);
+        System.out.print("value of a is " + x_start.toString(true) + "\n");
+        Apfloat y_itr = new Apfloat(itr_in, 26);
+        System.out.print("value of b is " + y_itr.toString(true) + "\n");
+        Apfloat z_steps = new Apfloat(steps, 26);
+        System.out.print("value of n is " + z_steps.toString(true) + "\n");
+        Apfloat end = y_itr.multiply(z_steps).add(x_start);
+        
+        
+         Apfloat e;
+        Apfloat temp = new Apfloat(0,26),  sum = new Apfloat(0, 26), one = new Apfloat(1, 26);
+        for (e = x_start; e.compareTo(end) == -1 || e.compareTo(end) == 0; e = e.add(z_steps)) {
+
+            /*step size is h
+      start is e
+     end is y
+      equation is described here ,,,, it is of finding value of pi
+             */
+            temp = e.multiply(e);
+            temp = one.subtract(temp);
+            temp = ApfloatMath.sqrt(temp);
+
+            temp = temp.multiply(z_steps);
+            temp = temp.multiply(new Apfloat(4));
+            sum = sum.add(temp);
+            //System.out.print(e.toString(true)+"\n");    
+            //System.out.print(e.toString(true)+"\n");     
+        }
+
+        
+          /*  float temp = 0, end = 0, sum = 0;
         end = start + h * c_in;              // start + no of iteration * step size
         System.out.println("\n value of end is  " + end);
         for (float i = start; i <= end; i += h) {
@@ -68,11 +102,12 @@ public class Client {
             temp = 4 * h * temp;
             sum = sum + temp;
 
-        }
+        } */
         return sum;
     }
 
     public static void main(String[] args) {
+        System.out.println("Bitch i start here");
         new Client();
     }
 }
