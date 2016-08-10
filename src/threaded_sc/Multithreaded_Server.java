@@ -1,5 +1,6 @@
 package threaded_sc;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,45 +8,59 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
-import java.util.Scanner;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import org.apfloat.Apfloat;
+import org.apfloat.ApfloatMath;
 
 public class Multithreaded_Server {
 
     private static int port = 11111, maxConnections = 5;
-     private static Date date = new Date();
-     public static float[] collect= new float[maxConnections];
+    private static Date date = new Date();
+    public static float[] collect = new float[maxConnections];
 //List<String> syncal = Collections.synchronizedList(new ArrayList<String>());
 // Listen for incoming connections and handle them
 
-    public static void main(String[] args) {
+    public static void main(String[] data) {
+
         int id = 0;
+        
         System.out.println("Notice: [" + date.toString() + "] Server started!");
+        
         JFrame frame = new JFrame("Notice: [" + date.toString() + "] Server started");
-         frame.setSize(400,400);
+         frame.setSize(800,600);
         //JPanel panel = new JPanel();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JFrame.setDefaultLookAndFeelDecorated(true);
-         JLabel label=new JLabel("HUnter", JLabel.CENTER); 
-        JTextField v0TextField = new JTextField ("initial velocity");
-        frame.add(label);
-        frame.setVisible(true);
-        
-                    
-        System.out.print("Enter the Starting  no.          :");  
-         Scanner in1 = new Scanner(System.in); 
-         float start = in1.nextFloat();
-      
-          System.out.print("Enter the ending  no.           :");
-         float end =in1.nextFloat();
-        
-          System.out.print("Enter the no of iterations.: ");
-          float step =in1.nextFloat();       
-             
-        
+         JTextArea textField = new JTextArea("INFORMATION ZONE.....");
+        textField.setEditable(false);
  
-        
-        
+       // JTextField v0TextField = new JTextField ("initial velocity");
+        frame.add(textField);
+        JScrollPane scroll = new JScrollPane(textField);
+        scroll.setBounds(10, 11, 455, 249);                     // <-- THIS
+
+        frame.add(scroll);
+        textField.setLineWrap(true);
+        textField.setWrapStyleWord(true);
+        frame.setVisible(true);
+         textField.setText("im here \n");
+                textField.setText("line cchanged \n");
+                
+
+
+ /*
+        float start = Float.parseFloat(Multithreaded_ServerUI.data[0]);
+
+        System.out.print(" the starting   no. is            :" + start);
+        float end = Float.parseFloat(Multithreaded_ServerUI.data[1]);
+
+        System.out.print("Enter the no of iterations.: ");
+        float step = Float.parseFloat(Multithreaded_ServerUI.data[2]);
+
+         */
         try {
             ServerSocket listener = new ServerSocket(port);
             Socket server;
@@ -53,11 +68,12 @@ public class Multithreaded_Server {
             while ((id < maxConnections) || (maxConnections == 0)) {
                 // client listner and thread connection;
 
-                server = listener.accept(); 
-                work connector = new work(server,id,maxConnections,start,end,step); // new object of class work , put arguments here
+                server = listener.accept();
+                work connector = new work(server, id, maxConnections, data[0], data[1], data[2]); // new object of class work , put arguments here
                 Thread t = new Thread(connector);  // create new thread using that object
                 t.start();                      //start the thread 
-                System.out.println("Notice: [" + date.toString() + "] - Client connected! ID: " + id);
+                System.out.println("\n Notice: [" + date.toString() + "] - Client connected! ID: " + id);
+                
                 id++;
             }
         } catch (IOException ioe) {
@@ -71,24 +87,24 @@ public class Multithreaded_Server {
 class work implements Runnable {
 
     private Socket server;
-    private int id,thread;
+    private int id, thread;
     //private String line, input;
-    private float start,end,step;
+    private String start, end, step;
+
     //private float collect[];
-    work(Socket server,int id,int thread,float start,float end,float step){                      //constructor
+    work(Socket server, int id, int thread, String start, String end, String step) {                      //constructor
         this.server = server;
-        this.id=id;
-        this.end=end;
-        this.start=start;
-        this.step=step;
-        this.thread=thread;
-        
+        this.id = id;
+        this.end = end;
+        this.start = start;
+        this.step = step;
+        this.thread = thread;
+
     }
 
     @Override
     public void run() {
 
-      
         try {
             // Define stream for read and write
             BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));
@@ -96,18 +112,21 @@ class work implements Runnable {
 
             //get thread id
             float threadid = Thread.currentThread().getId();
-            
+
             //send connection msg to client '
             out.println("You are connected.Start communication  thread_id in server: \t" + threadid + " (" + id + ")");
-
-      //      float thread = 5;
-        //    float start = 0, end = 1, step = 1000;
-            float h = (end - start) / step;
-            float c_in = step / thread;    // 2 is max thread , c_in is client size
+            Apfloat threadid1 = new Apfloat(thread, 26);
+            Apfloat start1 = new Apfloat(start, 26);
+            Apfloat end1 = new Apfloat(end, 26);
+            Apfloat step1 = new Apfloat(step, 26);
+            Apfloat id1 = new Apfloat(id, 26);
+            Apfloat range = end1.subtract(start1);
+            Apfloat h = range.divide(step1);
+            Apfloat c_in = step1.divide(threadid1);    // 2 is max thread , c_in is client size
 
             //each client receives starting value,step size and no of iterations
             //send starting value
-            out.println(id * (end - start) / thread); //start = range/thread =range for a client
+            out.println(id1.multiply(range.divide(threadid1))); //start = range/thread =range for a client
 
             //send no of iterations for a thread
             out.println(c_in);
@@ -115,8 +134,9 @@ class work implements Runnable {
             //send step size
             out.println(h);
 
-            float result = Float.parseFloat(in.readLine());
-            System.out.println("The result is " + result + "from thread no : " + threadid);
+            Apfloat result2 = new Apfloat(in.readLine(), 26);
+
+            System.out.println(" The result is " + result2 + "from thread no : " + threadid + "\n");
             server.close();
         } catch (IOException ioe) {
             System.out.println("IOException on socket listen: " + ioe);
