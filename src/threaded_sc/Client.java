@@ -107,7 +107,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        System.out.println("Bitch i start here");
+        System.out.println("i start here");
         new Client();
     }
 }
