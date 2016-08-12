@@ -7,11 +7,13 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
@@ -20,24 +22,24 @@ public class Multithreaded_Server {
     private static int port = 11111, maxConnections = 5;
     private static Date date = new Date();
     public static float[] collect = new float[maxConnections];
-//List<String> syncal = Collections.synchronizedList(new ArrayList<String>());
-// Listen for incoming connections and handle them
+   //List<String> syncal = Collections.synchronizedList(new ArrayList<String>());
+   // Listen for incoming connections and handle them
 
     public static void main(String[] data) {
 
         int id = 0;
-        
+
         System.out.println("Notice: [" + date.toString() + "] Server started!");
-        
+
         JFrame frame = new JFrame("Notice: [" + date.toString() + "] Server started");
-         frame.setSize(800,600);
+        frame.setSize(800, 600);
         //JPanel panel = new JPanel();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JFrame.setDefaultLookAndFeelDecorated(true);
-         JTextArea textField = new JTextArea("INFORMATION ZONE.....");
+        JTextArea textField = new JTextArea("INFORMATION ZONE.....");
         textField.setEditable(false);
- 
-       // JTextField v0TextField = new JTextField ("initial velocity");
+
+        /* JTextField v0TextField = new JTextField ("initial velocity");
         frame.add(textField);
         JScrollPane scroll = new JScrollPane(textField);
         scroll.setBounds(10, 11, 455, 249);                     // <-- THIS
@@ -45,13 +47,16 @@ public class Multithreaded_Server {
         frame.add(scroll);
         textField.setLineWrap(true);
         textField.setWrapStyleWord(true);
+        
+        
+        frame.add(new JScrollPane(textField));
+        MessageConsole mc = new MessageConsole(textField);
+        mc.redirectOut();
+        mc.redirectErr(Color.RED, null);
+        mc.setMessageLines(100);
         frame.setVisible(true);
-         textField.setText("im here \n");
-                textField.setText("line cchanged \n");
-                
-
-
- /*
+         */
+        /*
         float start = Float.parseFloat(Multithreaded_ServerUI.data[0]);
 
         System.out.print(" the starting   no. is            :" + start);
@@ -62,6 +67,20 @@ public class Multithreaded_Server {
 
          */
         try {
+            //create job array
+            ArrayList<jobclass> tasklist;
+            tasklist = new ArrayList<>();
+            
+            
+            jobclass test = new jobclass ("0","0.5","100");
+            jobclass test1 = new jobclass ("0.5","1","100");
+            tasklist.add(test);
+            tasklist.add(test1);
+            
+             for (jobclass m : tasklist) {
+        m.printDetails();
+     }
+            
             ServerSocket listener = new ServerSocket(port);
             Socket server;
 
@@ -73,7 +92,7 @@ public class Multithreaded_Server {
                 Thread t = new Thread(connector);  // create new thread using that object
                 t.start();                      //start the thread 
                 System.out.println("\n Notice: [" + date.toString() + "] - Client connected! ID: " + id);
-                
+
                 id++;
             }
         } catch (IOException ioe) {
@@ -137,6 +156,7 @@ class work implements Runnable {
             Apfloat result2 = new Apfloat(in.readLine(), 26);
 
             System.out.println(" The result is " + result2 + "from thread no : " + threadid + "\n");
+
             server.close();
         } catch (IOException ioe) {
             System.out.println("IOException on socket listen: " + ioe);

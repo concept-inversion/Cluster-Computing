@@ -19,6 +19,7 @@ public class Client {
     public Client() {
         try {
             client1 = new Socket("localhost", 11111);
+        
 
             BufferedReader in = new BufferedReader(new InputStreamReader(client1.getInputStream()));
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
@@ -52,11 +53,15 @@ public class Client {
             out.println(userinput);
             System.out.printf("yei kur vaneko" + userinput);
 
-        } catch (IOException ioe) {
+        } 
+            catch (IOException ioe) {
             System.out.println("Could not create Client socket on port 11111. Quitting.");
+           
             System.exit(-1);
-        }
+    }       
     }
+    
+    
 
         //calculating function 
         static Apfloat calc(float start, float itr_in, float steps) {
