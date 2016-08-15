@@ -9,11 +9,11 @@ package threaded_sc;
  *
  * @author Santosh
  */
-public class jobclass {
+public class TaskQueue {
 
     String start,increment,stepsize;
     
-    public jobclass(String start,String increment,String stepsize)
+    public TaskQueue(String start,String increment,String stepsize)
     {
       this.start=start;
       this.increment=increment;
@@ -24,3 +24,7 @@ public class jobclass {
                                      "  increment is here \n " + stepsize + " and stepsize \n");
  }
 }
+
+
+    
+    

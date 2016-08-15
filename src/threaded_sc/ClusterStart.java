@@ -6,18 +6,20 @@
 package threaded_sc;
 
 import static java.lang.System.exit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
+/**0    
  *
  * @author Santosh
  */
-public class Multithreaded_ServerUI extends javax.swing.JFrame {
+public class ClusterStart extends javax.swing.JFrame {
 
     static String[] data = new String[3];
     /**
      * Creates new form Multithreaded_ServerUI
      */
-    public Multithreaded_ServerUI() {
+    public ClusterStart() {
         initComponents();
     }
 
@@ -39,6 +41,7 @@ public class Multithreaded_ServerUI extends javax.swing.JFrame {
         star = new javax.swing.JTextField();
         en = new javax.swing.JTextField();
         ste = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +58,8 @@ public class Multithreaded_ServerUI extends javax.swing.JFrame {
 
         jLabel3.setText("Enter the starting No.  :");
 
+        jLabel4.setText("Calculation of PI");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,27 +68,34 @@ public class Multithreaded_ServerUI extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ste, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3))
                         .addGap(101, 101, 101)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(star, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                            .addComponent(en))))
-                .addGap(106, 106, 106))
+                            .addComponent(en, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(star)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ste, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(55, 55, 55))
             .addGroup(layout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(ok)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addComponent(ok))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(jLabel4)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(star, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -110,9 +122,13 @@ public class Multithreaded_ServerUI extends javax.swing.JFrame {
         data[0]= star.getText();              
         data[1] = en.getText();
         data[2] = ste.getText();
-        System.out.println("\n Start is \t " + data[0] + "end is \t " + data[1] + "and step is \t " + data[2] + "\n");
+       // System.out.println("\n Start is \t " + data[0] + "end is \t " + data[1] + "and step is \t " + data[2] + "\n");
         setVisible(false); 
-        Multithreaded_Server.main(data);
+        try {
+            JobExecutor.main(data);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ClusterStart.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         exit(0);
     }//GEN-LAST:event_okActionPerformed
@@ -134,20 +150,21 @@ public class Multithreaded_ServerUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Multithreaded_ServerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClusterStart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Multithreaded_ServerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClusterStart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Multithreaded_ServerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClusterStart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Multithreaded_ServerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClusterStart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Multithreaded_ServerUI().setVisible(true);
+                new ClusterStart().setVisible(true);
             }
         });
     }
@@ -157,6 +174,7 @@ public class Multithreaded_ServerUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JButton ok;
     private javax.swing.JTextField star;
     private javax.swing.JTextField ste;
