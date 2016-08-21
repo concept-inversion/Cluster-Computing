@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import javax.swing.JOptionPane;
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
@@ -16,9 +17,14 @@ public class Client {
 
     Socket client1;
 
-    public Client() {
-        try {
-            client1 = new Socket("localhost", 11111);
+    private Client() {
+        String ip = "";
+            ip = JOptionPane.showInputDialog("Enter the Server IP:");
+        while(true) {
+             
+            try {
+           
+            client1 = new Socket(ip, 11111);
         
 
             BufferedReader in = new BufferedReader(new InputStreamReader(client1.getInputStream()));
@@ -54,17 +60,19 @@ public class Client {
             out.println(userinput);
 
             System.out.printf("Result sent : " + userinput + "\n");
-
+ 
         } 
             catch (IOException ioe) {
-         //   System.out.println("Could not create Client socket on port 11111. Quitting.");
+                
+            System.out.println("Could not connect to server: "+ip + ": Retrying.");
            
-            System.exit(-1);
-    }       
+            
+    }    
+        }
     }
     
     
-
+    
         //calculating function 
         static Apfloat calc(String start, String itr_in,String steps) {
             
@@ -118,4 +126,6 @@ public class Client {
         
         new Client();
     }
+
+    
 }

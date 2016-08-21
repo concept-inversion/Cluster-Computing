@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.apfloat.Apfloat;
 import static threaded_sc.JobExecutor.Result;
 
 public class JobExecutor {
 
-    private static int port = 11111, maxConnections = 2;
+    private static int port = 11111, maxConnections = 5;
     private static final Date date = new Date();
     public static ArrayList<Apfloat> Result = new ArrayList<>();
     //List<String> syncal = Collections.synchronizedList(new ArrayList<String>());
@@ -111,6 +112,7 @@ public class JobExecutor {
     temper = temper.add(sing);
     }
         System.out.println("\n The result is " +temper.toString(true));
+         JOptionPane.showMessageDialog(null ,temper.toString(true));
         } catch (IOException ioe) {
             System.out.println("IOException on socket listen: " + ioe);
             ioe.printStackTrace();
