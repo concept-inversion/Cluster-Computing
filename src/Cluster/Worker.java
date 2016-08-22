@@ -2,30 +2,31 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package threaded_sc;
+package Cluster;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.Inet4Address;
 import java.net.Socket;
 import javax.swing.JOptionPane;
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
-public class Client {
+public class Worker {
 
     Socket client1;
 
-    private Client() {
-        String ip = "";
-            ip = JOptionPane.showInputDialog("Enter the Server IP:");
+    private Worker() {
+            String ip="192.168.0.100";
+            //ip = JOptionPane.showInputDialog("Enter the Server IP:");
         while(true) {
              
             try {
            
             client1 = new Socket(ip, 11111);
-        
+            
 
             BufferedReader in = new BufferedReader(new InputStreamReader(client1.getInputStream()));
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
@@ -34,10 +35,13 @@ public class Client {
             String userinput, Sock_in, net = "";
             String start , c_in, h ;
 
-            //connection message from server
+            String IP = Inet4Address.getLocalHost().getHostAddress();
+            out.println(IP);
+//connection message from server
             Sock_in = in.readLine();
             System.out.println(Sock_in);
-
+            
+            
             //first message from server
             Sock_in = in.readLine();
             start = Sock_in;
@@ -56,7 +60,7 @@ public class Client {
 
             Apfloat sum = calc(start, c_in, h);
             userinput = sum.toString(true);
-            
+                 
             out.println(userinput);
 
             System.out.printf("Result sent : " + userinput + "\n");
@@ -64,7 +68,7 @@ public class Client {
         } 
             catch (IOException ioe) {
                 
-            System.out.println("Could not connect to server: "+ip + ": Retrying.");
+            System.out.println("Could not connect to WorkServer at location : "+ip + ": Retrying.......");
            
             
     }    
@@ -87,7 +91,7 @@ public class Client {
         
          Apfloat e;
         Apfloat temp = new Apfloat(0,26),  sum = new Apfloat(0, 26), one = new Apfloat(1, 26);
-        for (e = x_start; e.compareTo(end) == -1 || e.compareTo(end) == 0 ; e = e.add(z_steps)) {
+        for (e = x_start; e.compareTo(end) == -1 ; e = e.add(z_steps)) {
 
             /*step size is h
       start is e
@@ -124,7 +128,7 @@ public class Client {
 
     public static void main(String[] args) {
         
-        new Client();
+        new Worker();
     }
 
     

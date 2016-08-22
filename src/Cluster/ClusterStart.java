@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package threaded_sc;
+package Cluster;
 
 import static java.lang.System.exit;
 import java.util.logging.Level;
@@ -117,7 +117,7 @@ public class ClusterStart extends javax.swing.JFrame {
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
         // TODO add your handling code here:
-        System.out.println("button pressed");
+        
        
         data[0]= star.getText();              
         data[1] = en.getText();

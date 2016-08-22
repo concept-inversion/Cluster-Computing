@@ -1,4 +1,4 @@
-package threaded_sc;
+package Cluster;
 
 import java.util.ArrayList;
 import java.util.Iterator;
