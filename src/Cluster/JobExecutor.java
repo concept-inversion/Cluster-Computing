@@ -4,6 +4,7 @@ This class divides the task and creates a queue of the tasks in hashmap to be ru
 package Cluster;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -11,13 +12,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import org.apfloat.Apfloat;
-import org.apfloat.ApfloatMath;
-import static Cluster.JobExecutor.Result;
+import org.apfloat.ApfloatMath; 
 import javax.swing.JOptionPane;
 
 public class JobExecutor {
 
-    private static int port = 11111, maxConnections = 10;
+    private static int port = 11111, maxConnections =100;
     private static final Date date = new Date();
     private static long startTime;
     public static ArrayList<Apfloat> Result = new ArrayList<>();
@@ -38,7 +38,7 @@ public class JobExecutor {
            
             List threads = new ArrayList();  //create list of threads
             
-            
+            long start =System.currentTimeMillis();
             //division on arraylist starts here
             Apfloat max = new Apfloat(maxConnections, 26);
             Apfloat start1 = new Apfloat(data[0], 26);
@@ -60,10 +60,14 @@ public class JobExecutor {
                 tasklist.add(task);
                 id1.add(one);
             }
-
+            
             for (TaskQueue m : tasklist) {
                 m.printDetails();
             }
+            long end = System.currentTimeMillis();
+            long total = end -start;
+            System.out.println("\n Task Queue Generation Time : " + total+" ms "); 
+             System.out.println("\n Task Queue Generated \n");   
             System.out.println("Notice: [" + date.toString() + "] Server started!");
 
             ServerSocket listener = new ServerSocket(port);
@@ -82,8 +86,9 @@ public class JobExecutor {
                 ThreadGroup pi = new ThreadGroup("Workers");
                 String name = Integer.toString(id);
                 Thread t = new Thread(pi,connector,name);  // create new thread using that object
-                System.out.println("\n Notice: [" + date.toString() + "] - Worker connected! ID: " + id);
-                t.start();                      //start the thread 
+                InetAddress ip = server.getInetAddress();
+                System.out.println("\n Notice: [" + date.toString() + "] - Worker connected! ID: " + id+ "\t IP address"+ip);
+                t.start();                       //start the thread 
                threads.add(t);
 
                 id++;
@@ -105,17 +110,23 @@ public class JobExecutor {
         
     }
              System.out.println("All thread works finished ");
+             long star = System.currentTimeMillis();
               Iterator itr = Result.iterator();
               Apfloat temper = new Apfloat(0,26);
               System.out.println("The items of result are:"); 
+              long en;
+            
     while(itr.hasNext())
     {
     
         Apfloat sing = (Apfloat) itr.next();
     
-        System.out.println(sing.toString(true)+ "  ");
+        //System.out.println(sing.toString(true)+ "  ");
     temper = temper.add(sing);
     }
+    en = System.currentTimeMillis();
+            long tota = en -star;
+            System.out.println("\n Result collection and printing Time : " + tota+" ms "); 
         System.out.println("\n The result is " +temper.toString(true));
         long stopTime = System.currentTimeMillis();
         long totaltime= stopTime - startTime;

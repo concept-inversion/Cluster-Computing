@@ -25,7 +25,7 @@ public class Worker {
              
             try {
            
-            client1 = new Socket(ip, 11111);
+            client1 = new Socket("localhost", 11111);
             
 
             BufferedReader in = new BufferedReader(new InputStreamReader(client1.getInputStream()));
@@ -64,8 +64,9 @@ public class Worker {
             out.println(userinput);
 
             System.out.printf("Result sent : " + userinput + "\n");
- 
-        } 
+            in.close();
+            out.close();
+            } 
             catch (IOException ioe) {
                 
             System.out.println("Could not connect to WorkServer at location : "+ip + ": Retrying.......");
@@ -93,10 +94,10 @@ public class Worker {
         Apfloat temp = new Apfloat(0,26),  sum = new Apfloat(0, 26), one = new Apfloat(1, 26);
         for (e = x_start; e.compareTo(end) == -1 ; e = e.add(z_steps)) {
 
-            /*step size is h
-      start is e
+     /*step size is h
+     start is e
      end is y
-      equation is described here ,,,, it is of finding value of pi
+     equation is described here ,,,, it is of finding value of pi
              */
         
             temp = e.multiply(e);
